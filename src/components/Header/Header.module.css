@@ -1,0 +1,16 @@
+.header{
+    width:100%;
+    height: 50px;
+    display: flex;
+    align-items:center;
+    justify-content: flex-start;
+    padding-left: 20px;
+    color:white;
+    background: #505f70;
+    margin-bottom: 10px;
+    border-radius:5px;
+}
+.header a{
+    text-decoration: none;
+    color:white;
+}

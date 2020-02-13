@@ -1,0 +1,11 @@
+.app-wrapper{
+      width:100%;
+      max-width: 1170px;
+      margin:0 auto;
+  }
+  
+
+.app-wrapper-content{
+          background:#1a314a;
+          border-radius:5px;
+  }

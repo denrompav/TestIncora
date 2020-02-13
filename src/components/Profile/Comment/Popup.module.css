@@ -1,0 +1,42 @@
+.comment{
+ background:#505f70;
+ color:white;
+ margin:15px;
+ padding: 15px;
+ border-radius:15px;
+}
+
+
+.popupPost,
+h3{
+    color:white;
+    padding-left: 15px;
+}
+
+.myButton {
+	box-shadow:inset 0px -1px 0px 0px #ffffff;
+	background:linear-gradient(to bottom, #ededed 5%, #dfdfdf 100%);
+	background-color:#ededed;
+	border-radius:13px;
+	display:inline-block;
+	cursor:pointer;
+	color:#777777;
+	font-family:Arial;
+	font-size:15px;
+	font-weight:bold;
+	padding:9px 29px;
+	text-decoration:none;
+    text-shadow:0px 1px 0px #ffffff;
+}
+.myButton:hover {
+	background:linear-gradient(to bottom, #dfdfdf 5%, #ededed 100%);
+	background-color:#dfdfdf;
+}
+.myButton:active {
+	position:relative;
+	top:1px;
+}
+.btnContainer{
+    display: flex;
+    justify-content: space-evenly;
+}

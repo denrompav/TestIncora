@@ -1,0 +1,37 @@
+
+
+.formControl.error input,
+.formControl.error textarea{
+    border:1px solid red;
+}
+
+.formControl.error span{
+    border:1px solid red;
+}
+
+.formSummaryError {
+    border:1px solid red;
+    padding: 5px;
+    
+}
+.input{
+    width: 100%;
+    height: 30px;
+    border-radius: 15px;
+    padding-left: 10px;
+}
+.textarea{
+    border-radius: 15px;
+    width: 100%;
+    height: 60px;
+    padding-left: 10px;
+    -webkit-appearance: none;
+  }
+
+.form{
+    width: 500px;
+}
+
+.btn{
+    
+}
