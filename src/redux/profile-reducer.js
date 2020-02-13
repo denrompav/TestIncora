@@ -47,7 +47,6 @@ const profileReducer = (state = initialState, action) => {
             }
         }
         case SOME_ERROR: {
-            debugger
             return {
                 ...state,
                 errors: [{...action.err}]
