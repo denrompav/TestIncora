@@ -15,7 +15,7 @@ class PostsContainer extends Component {
         if (!userId) {
             this.props.history.push('/')
         }
-        this.props.getPosts(userId).then((r) => console.log('posts'));
+        this.props.getPosts(userId)
     }
     componentDidMount() {
         this.refreshProfile()

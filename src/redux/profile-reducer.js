@@ -47,9 +47,10 @@ const profileReducer = (state = initialState, action) => {
             }
         }
         case SOME_ERROR: {
+            debugger
             return {
                 ...state,
-                errors: [...action.err]
+                errors: [{...action.err}]
             }
         }
         case IS_FETCHING_COMMENT: {
@@ -121,7 +122,7 @@ export const updatePost = (updatedPost, postId) => {
         delete updatedPost.editMode
         const response = await profileAPI.updatePost(updatedPost, postId).catch(err => dispatch(someError(err)))
         if (response.status === 200) {
-            dispatch(getPosts())
+            dispatch(getPosts(postId))
         }
     }
 }
