@@ -32,7 +32,10 @@ class Popup extends Component {
     }
 
     onSubmit = (formData) => {
-        this.props.updatePost(formData, this.props.postId).then(() => this.toggleEditMode(false));
+        formData.id = this.props.postId
+        formData.userId = this.props.userId
+        delete formData.editMode
+        this.props.updatePost(formData, this.props.postId).finally(() => this.toggleEditMode(false));
     }
 
     render() {
@@ -41,6 +44,7 @@ class Popup extends Component {
         }
         const myPost = (this.state.editMode ? <AddPostDataForm initialValues={this.state}
             toggleEditMode={this.toggleEditMode}
+            isUploading = {this.props.isUploading}
             postBody={this.state.postTitle}
             onSubmit={this.onSubmit}
         />
@@ -52,6 +56,7 @@ class Popup extends Component {
                     <button className={styles.myButton} onClick={() => this.toggleEditMode(true)}>edit</button>
                     <button className={styles.myButton} onClick={() => this.props.deletePost(this.props.postId)}>delete</button>
                 </div>
+                {this.props.isUploading?<div>Loading...Please wait</div>:null}
             </div>)
 
         const commentsList = this.props.currentComments.map((comment, index) => {
@@ -73,7 +78,8 @@ class Popup extends Component {
 
 const mapStateToProps = (state) => ({
     currentComments: state.profilePage.currentComments,
-    isFetchingComment: state.profilePage.isFetchingComment
+    isFetchingComment: state.profilePage.isFetchingComment,
+    isUploading:state.profilePage.isUploading
 })
 
 export default connect(mapStateToProps, { getCurrentComment, deletePost, updatePost })(Popup)

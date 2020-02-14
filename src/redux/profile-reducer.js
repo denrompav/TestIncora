@@ -6,12 +6,15 @@ const DELETE_POST = 'DELETE_POST'
 const SAVE_NEW_POST = 'SAVE_NEW_POST'
 const SOME_ERROR = 'SOME_ERROR'
 const IS_FETCHING_COMMENT = 'IS_FETCHING_COMMENT'
+const UPDATE_POST = 'UPDATE_POST'
+const IS_UPLOADING = 'IS_UPLOADING'
 const initialState = {
     postsData: [],
     isFetching: false,
     currentComments: [],
     errors: [],
-    isFetchingComment: false
+    isFetchingComment: false,
+    isUploading:false
 }
 
 const profileReducer = (state = initialState, action) => {
@@ -58,6 +61,18 @@ const profileReducer = (state = initialState, action) => {
                 isFetchingComment: action.isFetching
             }
         }
+        case UPDATE_POST:{
+            return{
+                ...state,
+                postsData:state.postsData.map(post => post.id === action.updatePost.id ?{...action.updatePost} : post)
+            }
+        }
+        case IS_UPLOADING:{
+            return{
+                ...state,
+                isUploading:action.isUploading
+            }
+        }
         default:
             return state
     }
@@ -71,6 +86,8 @@ export const setCurrentComments = (comments) => ({ type: SET_CURRENT_COMMENT, co
 export const deletePostInState = (postId) => ({ type: DELETE_POST, postId })
 export const savePostDataInState = (newPost, userId) => ({ type: SAVE_NEW_POST, payload: { newPost, userId } })
 export const someError = (err) => ({ type: SOME_ERROR, err })
+export const updatePostInState = (updatePost) =>({type:'UPDATE_POST',updatePost})
+export const isUploadingToggle = (isUploading) =>({type:'IS_UPLOADING',isUploading})
 
 //thunk
 export const getPosts = (userId) => {
@@ -102,15 +119,22 @@ export const savePostData = (post, userId) => {
         const response = await profileAPI.savePost(post).catch(err => dispatch(someError(err)))
         if (response.status === 201) {
             dispatch(savePostDataInState(response.data, userId))
+        }else{
+            dispatch(savePostDataInState(post, userId))
         }
     }
 }
 
 export const deletePost = (postId) => {
     return async (dispatch) => {
+        dispatch(isUploadingToggle(true))
         const response = await profileAPI.deletePost(postId).catch(err => dispatch(someError(err)))
         dispatch(deletePostInState(postId))
         if (response.status === 200) {
+            dispatch(deletePostInState(postId))
+            dispatch(isUploadingToggle(false))
+        }else{
+            dispatch(isUploadingToggle(false))
             dispatch(deletePostInState(postId))
         }
     }
@@ -118,10 +142,17 @@ export const deletePost = (postId) => {
 
 export const updatePost = (updatedPost, postId) => {
     return async (dispatch) => {
-        delete updatedPost.editMode
+        dispatch(isUploadingToggle(true))
         const response = await profileAPI.updatePost(updatedPost, postId).catch(err => dispatch(someError(err)))
         if (response.status === 200) {
-            dispatch(getPosts(postId))
+            dispatch(updatePostInState(updatedPost))
+            dispatch(isUploadingToggle(false))
+
+        }else{
+            /* dispatch(getPosts(updatedPost.userId)) */
+            dispatch(updatePostInState(updatedPost))
+            dispatch(isUploadingToggle(false))
+
         }
     }
 }

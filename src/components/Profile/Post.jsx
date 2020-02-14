@@ -14,6 +14,7 @@ const Post = (props) => {
                 <Popup postId = {props.id}
                        postTitle = {props.title}
                        postBody = {props.body}
+                       userId = {props.userId}
                  />
             </div>
             : null)

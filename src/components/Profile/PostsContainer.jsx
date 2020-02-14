@@ -40,7 +40,7 @@ class PostsContainer extends Component {
 const mapStateToProps = (state) => ({
     posts: getPostsSelector(state),
     isFetching: getFetching(state),
-    errors: getError(state),
+    errors: getError(state)
 })
 export default compose(
     withRouter,
